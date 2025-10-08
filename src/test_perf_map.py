@@ -14,7 +14,7 @@ def main(include_opto, eids, with_reg):
     print(f"eids: {eids}")
     print(f"with_reg: {with_reg}")
 
-    base_path = '/work/hdd/bdye/jxia4/results/mae_results'
+    base_path = '/root_folder2/results/mae_results'
     num_train_sessions = len(eids)
 
     mask_mode = 'region'
@@ -29,11 +29,11 @@ def main(include_opto, eids, with_reg):
     use_wandb = False
 
     kwargs = {
-        "model": f"include:/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/mae_with_hemisphere_embed_and_diff_dim_per_area.yaml",
+        "model": f"include:/root_folder/src/configs/mae_with_hemisphere_embed_and_diff_dim_per_area.yaml",
     }
 
     config = config_from_kwargs(kwargs)
-    config = update_config("/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/finetune_sessions_trainer.yaml", config)
+    config = update_config("/root_folder/src/configs/finetune_sessions_trainer.yaml", config)
 
     config['model']['encoder']['masker']['mask_mode'] = mask_mode
     config['model']['encoder']['stitcher']['n_channels_per_region'] = region_channel_num_encoder
@@ -53,7 +53,7 @@ def main(include_opto, eids, with_reg):
     meta_data['eids'] = eids
     
     #load pr_max_dict.pkl
-    pr_max_dict_path = '/work/hdd/bdye/jxia4/data/tables_and_infos/pr_max_dict.pkl'
+    pr_max_dict_path = '/root_folder2/data/tables_and_infos/pr_max_dict.pkl'
     with open(pr_max_dict_path, 'rb') as f:
         pr_max_dict = pickle.load(f)
 

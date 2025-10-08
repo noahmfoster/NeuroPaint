@@ -29,7 +29,7 @@ def main(eids, with_reg):
     consistency = True
     load_previous_model = False
 
-    base_path = '/work/hdd/bdye/jxia4/results/mae_results'
+    base_path = '/root_folder2/results/mae_results'
     num_train_sessions = len(eids)
     train = True
 
@@ -45,11 +45,11 @@ def main(eids, with_reg):
 
     #%%
     kwargs = {
-        "model": f"include:/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/mae_with_hemisphere_embed_and_diff_dim_per_area_ibl.yaml",
+        "model": f"include:/root_folder/src/configs/mae_with_hemisphere_embed_and_diff_dim_per_area_ibl.yaml",
     }
 
     config = config_from_kwargs(kwargs)
-    config = update_config("/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/finetune_sessions_trainer.yaml", config)
+    config = update_config("/root_folder/src/configs/finetune_sessions_trainer.yaml", config)
 
     config['model']['encoder']['masker']['mask_mode'] = mask_mode
     config['model']['encoder']['stitcher']['n_channels_per_region'] = region_channel_num_encoder
@@ -90,7 +90,7 @@ def main(eids, with_reg):
     meta_data['eids'] = [eid_idx for eid_idx, eid in enumerate(eids)]
 
     #load pr_max_dict
-    pr_max_dict_path = '/work/hdd/bdye/jxia4/data/tables_and_infos/pr_max_dict_ibl.pkl'
+    pr_max_dict_path = '/root_folder2/data/tables_and_infos/pr_max_dict_ibl.pkl'
     with open(pr_max_dict_path, 'rb') as f:
         pr_max_dict = pickle.load(f)
 
@@ -134,7 +134,7 @@ def main(eids, with_reg):
         if config.wandb.use and accelerator.is_local_main_process and accelerator.process_index == 0:
             import wandb
             wandb.init(project=config.wandb.project,
-                       dir="/work/hdd/bdye/jxia4/wandb", 
+                       dir="/root_folder2/wandb", 
                     entity=config.wandb.entity, 
                     config=config, 
                     name="ibl_wo_trial_type_embed_with_reg_{}_2check_consistency_{}_n_layers_{}_num_session_{}_region_factors_encoder_{}".format(with_reg, consistency, n_layers, num_train_sessions, region_channel_num_encoder)

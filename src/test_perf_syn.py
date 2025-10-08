@@ -11,7 +11,7 @@ from utils.metric_utils import Poisson_fraction_deviance_explained, get_deviance
 #%%
 def main():
     eids = list(np.arange(10, dtype=int)) 
-    base_path = '/work/hdd/bdye/jxia4/results/mae_results/'
+    base_path = '/root_folder2/results/mae_results/'
     num_train_sessions = len(eids)
 
     mask_mode = 'region'
@@ -28,11 +28,11 @@ def main():
     with_reg = True
 
     kwargs = {
-        "model": f"include:/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/mae_with_region_stitcher_cross_att_simple_decoder.yaml",
+        "model": f"include:/root_folder/src/configs/mae_with_region_stitcher_cross_att_simple_decoder.yaml",
     }
 
     config = config_from_kwargs(kwargs)
-    config = update_config("/work/hdd/bdye/jxia4/code/autoencoder_mae/src/configs/finetune_sessions_trainer.yaml", config)
+    config = update_config("/root_folder/src/configs/finetune_sessions_trainer.yaml", config)
 
     config['model']['encoder']['masker']['mask_mode'] = mask_mode
     config['model']['decoder']['stitcher']['n_channels_per_region'] = region_channel_num

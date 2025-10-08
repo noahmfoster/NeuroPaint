@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=bdye-delta-gpu
-#SBATCH --job-name="40svo_only_recon"
-#SBATCH --output="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/mae_with_syn.%j.out"
+#SBATCH --job-name="train_map"
+#SBATCH --output="train_map.%j.out"
 #SBATCH --nodes=6
 #SBATCH --ntasks=6
 #SBATCH --gpus-per-task=1
@@ -20,10 +20,10 @@ source /etc/profile
 source ~/.bashrc   # Or other appropriate initialization file
 
 module load anaconda3_gpu/23.7.4
-source activate svo-mae
+source activate neuropaint
 
 # Set WANDB_DIR to avoid cross-device file movement issues
-export WANDB_DIR=/work/hdd/bdye/jxia4/wandb
+export WANDB_DIR=/root_folder2/wandb
 
 # Calculate head node IP
 nodes=( $( scontrol show hostnames $SLURM_JOB_NODELIST ) )
@@ -43,7 +43,7 @@ export LAUNCHER="torchrun \
 "
 
 # Load eids from session_order.pkl
-session_order_file="/work/hdd/bdye/jxia4/data/tables_and_infos/session_order.pkl"
+session_order_file="/root_folder2/data/tables_and_infos/session_order.pkl"
 eids=$(python -c "
 import pickle
 import numpy as np
@@ -57,7 +57,7 @@ print(' '.join(map(str, eids)))
 # Print loaded eids for debugging
 echo "Loaded eids: $eids"
 
-export CMD="$LAUNCHER /work/hdd/bdye/jxia4/code/autoencoder_mae/src/pretrain_multi_session_svoboda_lump_embed_hemisphere_diff_dim_per_area.py --eids $eids"
+export CMD="$LAUNCHER /root_folder/src/train_on_map.py --eids $eids"
 
 
 srun $CMD

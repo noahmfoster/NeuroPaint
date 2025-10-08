@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=bdye-delta-gpu
-#SBATCH --job-name="g3_sd_no_consist"
-#SBATCH --output="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/mae_with_syn.%j.out"
+#SBATCH --job-name="train_syn"
+#SBATCH --output="train_syn.%j.out"
 #SBATCH --nodes=2
 #SBATCH --ntasks=2
 #SBATCH --gpus-per-task=1
@@ -20,7 +20,7 @@ source /etc/profile
 source ~/.bashrc   # Or other appropriate initialization file
 
 module load anaconda3_gpu/23.7.4
-source activate svo-mae
+source activate neuropaint
 
 # Set WANDB_DIR to avoid cross-device file movement issues
 export WANDB_DIR=/work/hdd/bdye/jxia4/wandb
@@ -54,7 +54,7 @@ print(' '.join(map(str, eids)))
 echo "Loaded eids: $eids"
 
 
-export CMD="$LAUNCHER /work/hdd/bdye/jxia4/code/autoencoder_mae/src/pretrain_multi_session_cross_att_simple_decoder.py --eids $eids"
+export CMD="$LAUNCHER /root_folder/src/train_on_syn.py --eids $eids"
 
 srun $CMD
 

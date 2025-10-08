@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=bdye-delta-gpu
-#SBATCH --job-name="20se_ibl"
-#SBATCH --output="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/mae_with_syn.%j.out"
+#SBATCH --job-name="train_ibl"
+#SBATCH --output="train_ibl.%j.out"
 #SBATCH --nodes=2
 #SBATCH --ntasks=2
 #SBATCH --gpus-per-task=1
@@ -20,7 +20,7 @@ source /etc/profile
 source ~/.bashrc   # Or other appropriate initialization file
 
 module load anaconda3_gpu/23.7.4
-source activate svo-mae
+source activate neuropaint
 
 # Set WANDB_DIR to avoid cross-device file movement issues
 export WANDB_DIR=/work/hdd/bdye/jxia4/wandb
@@ -43,14 +43,14 @@ export LAUNCHER="torchrun \
 "
 
 #load session id for ibl
-session_order_file="/work/hdd/bdye/jxia4/data/tables_and_infos/ibl_eids.txt"
+session_order_file="/root_folder2/data/tables_and_infos/ibl_eids.txt"
 eids=$(python -c "with open('$session_order_file', 'r') as file: print('\n'.join([line.strip() for line in file]))")
 
 
 # Print loaded eids for debugging
 echo "Loaded eids: $eids"
 
-export CMD="$LAUNCHER /work/hdd/bdye/jxia4/code/autoencoder_mae/src/pretrain_multi_session_ibl.py --eids $eids --with_reg"
+export CMD="$LAUNCHER /root_folder/src/pretrain_multi_session_ibl.py --eids $eids --with_reg"
 
 
 srun $CMD

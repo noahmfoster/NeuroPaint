@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=bdye-delta-gpu
-#SBATCH --job-name="te_syn_reconreg"
-#SBATCH --output="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/test_syn.%j.out"
-#SBATCH --error="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/test_syn.%j.err"
+#SBATCH --job-name="test_syn"
+#SBATCH --output="test_syn.%j.out"
+#SBATCH --error="test_syn.%j.err"
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gpus-per-task=1
@@ -16,10 +16,10 @@ source /etc/profile
 source ~/.bashrc   # Or other appropriate initialization file
 
 module load anaconda3_gpu
-source activate svo-mae
+source activate neuropaint
 
 
-export CMD="python -u /work/hdd/bdye/jxia4/code/autoencoder_mae/src/test_perf_GLM_simple_decoder.py"
+export CMD="python -u /root_folder/src/test_perf_syn.py"
 
 
 srun $CMD

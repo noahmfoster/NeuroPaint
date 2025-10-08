@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --account=bdye-delta-gpu
-#SBATCH --job-name="test_40_wreg"
-#SBATCH --output="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/test_svo_40.%j.out"
-#SBATCH --error="/work/hdd/bdye/jxia4/code/autoencoder_mae/logs/test_svo_40.%j.err"
+#SBATCH --job-name="test_map"
+#SBATCH --output="test_map.%j.out"
+#SBATCH --error="test_map.%j.err"
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gpus-per-task=1
@@ -16,10 +16,10 @@ source /etc/profile
 source ~/.bashrc   # Or other appropriate initialization file
 
 module load anaconda3_gpu
-source activate svo-mae
+source activate neuropaint
 
 # Load eids from session_order.pkl
-session_order_file="/work/hdd/bdye/jxia4/data/tables_and_infos/session_order.pkl"
+session_order_file="/root_folder2/data/tables_and_infos/session_order.pkl"
 eids=$(python -c "
 import pickle
 import numpy as np
@@ -30,7 +30,7 @@ eids = np.sort(session_order[:40])
 print(' '.join(map(str, eids)))
 ")
 
-export CMD="python -u /work/hdd/bdye/jxia4/code/autoencoder_mae/src/test_perf_GLM_simple_decoder_svoboda_unbalanced_lump.py --eids $eids --with_reg"
+export CMD="python -u /root_folder/src/test_perf_map.py --eids $eids --with_reg"
 
 
 srun $CMD
