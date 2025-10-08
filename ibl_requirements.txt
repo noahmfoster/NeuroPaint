@@ -1,0 +1,7 @@
+scipy
+ONE-api
+ibllib
+ibl-neuropixel
+iblatlas
+iblutil
+spikeinterface
