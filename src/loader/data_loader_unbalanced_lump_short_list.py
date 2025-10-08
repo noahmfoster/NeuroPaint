@@ -366,12 +366,12 @@ def make_loader(session_ind_list, batch_size, include_opto = False, seed=42, dis
 def main():
     session_order = pickle.load(open('/work/hdd/bdye/jxia4/data/tables_and_infos/session_order.pkl', 'rb'))
 
-    eids = np.sort(session_order[:160])
+    eids = np.sort(session_order[:40])
 
     print(eids)
 
     #exclude the following sessions [ 13,  63, 136, 153, 160] at indices [12, 58,123,139,146], these are 5 sessions with 0 areas of interest after I held-out 1 area.
-    eids = np.delete(eids, [ 12,  58, 123, 139, 146]) #for 160 sessions
+    #eids = np.delete(eids, [ 12,  58, 123, 139, 146]) #for 160 sessions
 
     #breakpoint()
 
