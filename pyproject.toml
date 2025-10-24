@@ -22,5 +22,8 @@ dependencies = [
 "transformers==4.38.2",
 "accelerate==0.27.2",
 "huggingface-hub",
-"requests"
+"requests",
+"ipykernel",
+"pip",
+"dandi>=0.60.0"
 ]
